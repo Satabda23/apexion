@@ -1,0 +1,145 @@
+@import '../../sass/colors.scss';
+
+.appointment-btn {
+    background: $color-blue;
+    color: $color-white;
+    padding: 14px 20px;
+    text-decoration: none;
+    border-radius: 15px;
+    transition: .3s;
+    border: 1px solid transparent;
+    font-size: 14px;
+    font-weight: 500;
+    margin-top: 20px;
+    display: inline-block;
+
+    &:hover {
+        background: $color-white;
+        color: $color-blue;
+        border: 1px solid $color-blue;
+    }
+}
+
+.text-right {
+    text-align: right;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    
+    label {
+        text-transform: uppercase;
+        color: #1819458a;
+        font-size: 16px;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+
+    .form-control {
+        height: 50px;
+        border-radius: 14px;
+    }
+
+    textarea {
+        height: 150px !important;
+    }
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  right: 0; bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.ReactModal__Overlay--after-open {
+  opacity: 1;
+}
+
+.ReactModal__Overlay--before-close {
+  opacity: 0;
+}
+
+.feedback-modal {
+  background: #fff;
+  padding: 2rem 1.5rem;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 420px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  transform: translateY(-20px);
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
+
+  h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  button {
+    padding: 0.6rem 1.4rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #0056b3;
+    }
+  }
+
+  &.success h2 {
+    color: #28a745;
+  }
+
+  &.error h2 {
+    color: #dc3545;
+  }
+
+  &.info h2 {
+    color: #007bff;
+  }
+}
+
+.ReactModal__Content--after-open {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.ReactModal__Content--before-close {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+@media (max-width: 400px) {
+  .feedback-modal {
+    padding: 1.5rem 1rem;
+
+    h2 {
+      font-size: 1.25rem;
+    }
+
+    p {
+      font-size: 0.95rem;
+    }
+
+    button {
+      width: 100%;
+    }
+  }
+}
