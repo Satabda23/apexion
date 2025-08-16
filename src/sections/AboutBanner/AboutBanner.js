@@ -20,13 +20,17 @@ const AboutBanner = () => {
                 <div className="about-banner-text">
                   <h2>About Us</h2>
                   <p>
-                    We want you to feel amazing about your oral wellness. Not
-                    just twice a year, but every time you take a bite, tell a
-                    joke, laugh, or share a kiss.
+                    At Apexion, we believe that oral wellness is about more than
+                    just routine checkups — it’s about helping you feel
+                    confident, healthy, and amazing every single day. Our team
+                    is dedicated to providing compassionate, personalized
+                    service in a welcoming environment where your comfort and
+                    confidence come first. We’re here to help you achieve
+                    optimal oral health and a smile you can be proud of.
                   </p>
 
                   <div className="theme-btn">
-                    <Link to="/ContactUs">Contact Us</Link>
+                    <Link to="/contact">Contact Us</Link>
                   </div>
                 </div>
               </div>
