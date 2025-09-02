@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+
+// ===== FRONTEND: BookAppointment.jsx =====
+import React, { useState, useRef } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import Modal from "react-modal";
 import "./BookAppointment.scss";
@@ -8,8 +10,11 @@ Modal.setAppElement("#root");
 
 const BookAppointment = () => {
   const [formData, setFormData] = useState({ name: "", phone: "", message: "" });
-  const [verified, setVerified] = useState(false);
+  const [recaptchaToken, setRecaptchaToken] = useState(null); // 🔥 Store the token
   const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  // 🔥 Add ref to reset reCAPTCHA
+  const recaptchaRef = useRef(null);
 
   // Modal state
   const [modal, setModal] = useState({
@@ -31,8 +36,14 @@ const BookAppointment = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleCaptchaChange = () => {
-    setVerified(true);
+  // 🔥 Fix: Capture the actual token value
+  const handleCaptchaChange = (token) => {
+    setRecaptchaToken(token);
+  };
+
+  // 🔥 Handle reCAPTCHA expiry
+  const handleCaptchaExpired = () => {
+    setRecaptchaToken(null);
   };
 
   const isValidPhone = (phone) => /^[0-9]{10}$/.test(phone);
@@ -40,8 +51,9 @@ const BookAppointment = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!verified) {
-      openModal("Verification Failed", "Please verify you are not a robot.", "error");
+    // 🔥 Check for reCAPTCHA token instead of just verified state
+    if (!recaptchaToken) {
+      openModal("Verification Failed", "Please complete the reCAPTCHA verification.", "error");
       return;
     }
 
@@ -53,10 +65,14 @@ const BookAppointment = () => {
     setIsSubmitting(true);
 
     try {
+      // 🔥 Send reCAPTCHA token to backend
       const res = await fetch("http://localhost:5000/api/appointments", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          recaptchaToken // 🔥 Include the token
+        }),
       });
 
       const data = await res.json();
@@ -64,13 +80,27 @@ const BookAppointment = () => {
       if (data.success) {
         openModal("Appointment Booked", "Your appointment has been submitted successfully.", "success");
         setFormData({ name: "", phone: "", message: "" });
-        setVerified(false);
+        setRecaptchaToken(null);
+        // 🔥 Reset reCAPTCHA
+        if (recaptchaRef.current) {
+          recaptchaRef.current.reset();
+        }
       } else {
         openModal("Error", data.message || "Failed to submit appointment.", "error");
+        // 🔥 Reset reCAPTCHA on error
+        if (recaptchaRef.current) {
+          recaptchaRef.current.reset();
+        }
+        setRecaptchaToken(null);
       }
     } catch (err) {
       console.error(err);
       openModal("Network Error", "Unable to reach the server. Please try again later.", "error");
+      // 🔥 Reset reCAPTCHA on error
+      if (recaptchaRef.current) {
+        recaptchaRef.current.reset();
+      }
+      setRecaptchaToken(null);
     } finally {
       setIsSubmitting(false);
     }
@@ -97,7 +127,13 @@ const BookAppointment = () => {
         </div>
 
         <div className="form-group">
-          <ReCAPTCHA sitekey="6LfnsXErAAAAAF0CXaMiClaxBbMn0cgMpWuXIdOV" onChange={handleCaptchaChange} />
+          {/* 🔥 Add ref and handle expiry */}
+          <ReCAPTCHA 
+            ref={recaptchaRef}
+            sitekey="6LcLv64rAAAAAG4DMFP2A_OeTNCTv4MwdiqlBAxE" 
+            onChange={handleCaptchaChange}
+            onExpired={handleCaptchaExpired}
+          />
         </div>
 
         <button type="submit" className="appointment-btn" disabled={isSubmitting}>

@@ -20,7 +20,7 @@ const SubmitTestimonial = ({ onSubmit }) => {
     try {
       // 1. Send to backend
       await axios.post("/api/reviews/user", formData);
-
+      console.log("Review submitted:", formData);
       // 2. Update UI immediately
       if (onSubmit) {
         onSubmit({

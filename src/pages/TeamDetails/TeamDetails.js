@@ -202,7 +202,7 @@ const TeamDetails = () => {
                       </div>
 
                       {/* Contact Information */}
-                      <div className="contact-section">
+                      <div className="team-member-contact">
                         <div className="contact-links">
                           <a
                             href={`mailto:${member.email}`}

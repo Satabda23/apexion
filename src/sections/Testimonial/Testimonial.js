@@ -14,13 +14,14 @@ const Testimonial = () => {
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const res = await axios.get("/api/reviews/user");
-        const formatted = res.data.map((item) => ({
+        const res = await axios.get("http://localhost:5000/api/reviews/latest");
+        console.log("Raw response:", res.data.data.reviews);
+        const formatted = res.data.data.reviews.map((item) => ({
           name: item.name,
           description: item.text,
           rating: item.rating,
         }));
-
+        console.log("Fetched reviews:", formatted);
         // Optional: Add default reviews if no DB reviews found
         if (formatted.length === 0) {
           setTestimonials([

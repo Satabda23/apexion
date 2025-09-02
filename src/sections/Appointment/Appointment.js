@@ -31,8 +31,8 @@ const Appointment = () => {
           <div className="col-lg-7 col-md-6">
             <div className="appointment-form-area">
               <SectionTitle
-                subTitle="BOOK APPOINTMENT"
-                title="Care at Dentalist is pleasure"
+                subTitle="CONTACT FOR APPOINTMENT"
+                title="Care at Apexion is pleasure"
                 description="Contact us for a comfortable and personalized dental experience."
               />
 

@@ -1,15 +1,17 @@
 @import '../../sass/colors.scss';
 
-.contact-section {
+.contact-page-header {
     margin-top: 130px;
     height: 500px;
+    position: initial;
+    z-index: 1;
 
     .section-title {
         max-width: 550px;
         margin: 0 auto 40px;
         text-align: center;
+        padding-top: 80px;
     }
-
 }
 
 .contact-form-area {
@@ -19,4 +21,41 @@
     background: $color-white;
     border-radius: 20px;
     box-shadow: 0px 0 20px 14px #6c757d0d;
+    // position: relative;
+    // z-index: 99;
+}
+
+// Media queries for responsive design
+@media (max-width: 768px) {
+    .contact-page-header {
+        height: 400px;
+        margin-top: 100px;
+        
+        .section-title {
+            padding-top: 60px;
+            max-width: 90%;
+        }
+    }
+    
+    .contact-form-area {
+        max-width: 90%;
+        margin: -150px auto 50px;
+        padding: 30px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .contact-page-header {
+        height: 350px;
+        margin-top: 80px;
+        
+        .section-title {
+            padding-top: 40px;
+        }
+    }
+    
+    .contact-form-area {
+        margin: -120px auto 30px;
+        padding: 25px 15px;
+    }
 }

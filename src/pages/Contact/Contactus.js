@@ -8,7 +8,7 @@ import Footer from "../../sections/Footer/Footer";
 const Contactus = () => {
   return (
     <>
-      <section className="section-bg section-common contact-section">
+      <section className="section-bg section-common contact-page-header">
         <Navbar />
         <SectionTitle
           title="Book an Appointment"
