@@ -1,7 +1,7 @@
 import React from "react";
 import "./Emergency.scss";
 import SectionTitle from "../../components/SectionTitle/SectionTitle";
-import EmergencyImg from "../../assets/emergency.png";
+import EmergencyImg from "../../assets/emergency.jpeg";
 import { Link } from "react-router-dom";
 
 const Emergency = () => {

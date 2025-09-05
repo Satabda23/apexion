@@ -11,7 +11,8 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import Services from "./pages/Services";
 import Contactus from "./pages/Contact/Contactus";
-import TeamDetails from "./pages/TeamDetails/TeamDetails";
+// import TermsOfUse from "./pages/TermsOfUse";
+// import TeamDetails from "./pages/TeamDetails/TeamDetails";
 import AdminPanel from "./admin/AdminPanel";
 import AdminLogin from "./admin/pages/AdminLogin";
 import ProtectedRoute from "./admin/components/ProtectedRoute";
@@ -29,7 +30,8 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/services" element={<Services />} />
         <Route path="/contact" element={<Contactus />} />
-        <Route path="/team" element={<TeamDetails />} />
+        {/* <Route path="/team" element={<TeamDetails />} /> */}
+        {/* <Route path="/TermsOfUse" element={<TermsOfUse />} /> */}
 
         {/* Admin Routes */}
         <Route path="/admin/login" element={<AdminLogin />} />

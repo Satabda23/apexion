@@ -11,6 +11,11 @@
         z-index: 1;
         margin-bottom: 30px;
 
+        img{
+             border-radius: 20px;
+        }
+        
+
         &::before {
             position: absolute;
             content: "";
@@ -20,7 +25,7 @@
             left: 35%;
             background: #DBEFFA;
             z-index: -1;
-            border-radius: 20px;
+            // border-radius: 30px;
         }
     }
 

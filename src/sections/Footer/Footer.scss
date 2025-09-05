@@ -1,6 +1,5 @@
 @import '../../sass/colors.scss';
 
-
 footer {
     background: $color-black;
 
@@ -141,7 +140,40 @@ footer {
                     a {
                         color: $color-white;
                         text-decoration: none;
+                        
+                        &:hover {
+                            color: #7C3AED;
+                            text-decoration: underline;
+                        }
                     }
+                }
+            }
+        }
+    }
+
+    // Developer Credit Section
+    .developer-credit {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 15px 0;
+        text-align: center;
+        margin-top: 30px;
+
+        p {
+            margin: 0;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            
+            .company-name {
+                color: #7C3AED;
+                font-weight: 600;
+                transition: color 0.3s ease;
+                cursor: pointer;
+                
+                &:hover {
+                    color: #A855F7;
+                    text-decoration: underline;
                 }
             }
         }
@@ -168,6 +200,42 @@ footer {
                     border-radius: 15px;
                 }
             }
+        }
+
+        .copyright-area {
+            flex-direction: column;
+            gap: 15px;
+            text-align: center;
+
+            .copy-links {
+                ul {
+                    li {
+                        margin-left: 15px;
+                        margin-right: 15px;
+                    }
+                }
+            }
+        }
+
+        .developer-credit {
+            padding: 12px 15px;
+            margin-top: 20px;
+            
+            p {
+                font-size: 11px;
+                line-height: 1.4;
+            }
+        }
+    }
+}
+
+// Additional responsive breakpoint for better mobile layout
+@media (max-width: 768px) {
+    footer {
+        .copyright-area {
+            flex-direction: column;
+            gap: 20px;
+            text-align: center;
         }
     }
 }

@@ -11,23 +11,19 @@ const Footer = () => {
   const footerMenu = [
     {
       name: "About Us",
-      link: "/",
+      link: "/about", // Fixed: Changed from "/" to "/about"
     },
     {
       name: "Services",
-      link: "/",
-    },
-    {
-      name: "Dentist",
-      link: "/",
-    },
-    {
-      name: "Blogs",
-      link: "/",
+      link: "/services", // Fixed: Changed from "/" to "/services"
     },
     {
       name: "FAQs",
-      link: "/",
+      link: "/about", // You can update this when you create FAQ page
+    },
+    {
+      name: "Contact Us",
+      link: "/contact", // Fixed: Changed from "/" to "/contact"
     },
   ];
 
@@ -39,7 +35,7 @@ const Footer = () => {
     },
     {
       title: "Open Hour",
-      info: "09:00 AM - 20:00 PM",
+      info: "10:00 AM - 07:00 PM",
       icon: time,
     },
     {
@@ -60,7 +56,7 @@ const Footer = () => {
             <p>
               Located in Guwahati, Apexion Dental Clinic offers expert dental
               care with advanced technology and a patient-first approach. Known
-              for our precision, comfort, and results, we’re proud to be one of
+              for our precision, comfort, and results, we're proud to be one of
               the top-rated clinics in the city.
             </p>
 
@@ -68,17 +64,17 @@ const Footer = () => {
               <p>Follow us on</p>
               <ul>
                 <li>
-                  <a href="/">
+                  <a href="/" aria-label="Facebook">
                     <FaFacebookF />
                   </a>
                 </li>
                 <li>
-                  <a href="/">
+                  <a href="/" aria-label="Twitter">
                     <FaTwitter />
                   </a>
                 </li>
                 <li>
-                  <a href="/">
+                  <a href="/" aria-label="Instagram">
                     <FaInstagram />
                   </a>
                 </li>
@@ -89,9 +85,12 @@ const Footer = () => {
             <div className="footer-link">
               <p>Quick Links</p>
               <ul>
-                {footerMenu.map((singleMenu) => (
-                  <li>
-                    <Link to="/">{singleMenu.name}</Link>
+                {footerMenu.map((singleMenu, index) => (
+                  <li key={index}>
+                    {" "}
+                    {/* Fixed: Added key prop */}
+                    <Link to={singleMenu.link}>{singleMenu.name}</Link>{" "}
+                    {/* Fixed: Using singleMenu.link instead of hardcoded "/" */}
                   </li>
                 ))}
               </ul>
@@ -101,11 +100,13 @@ const Footer = () => {
             <div className="footer-contact">
               <p>Contact & Information</p>
 
-              {footerContacts.map((footerContact) => {
+              {footerContacts.map((footerContact, index) => {
                 return (
-                  <div className="contact-list">
+                  <div className="contact-list" key={index}>
+                    {" "}
+                    {/* Fixed: Added key prop */}
                     <div className="contact-icon">
-                      <img src={footerContact.icon} alt="call" />
+                      <img src={footerContact.icon} alt={footerContact.title} />
                     </div>
                     <div className="contact-text">
                       <p>{footerContact.title}</p>
@@ -125,13 +126,21 @@ const Footer = () => {
           <div className="copy-links">
             <ul>
               <li>
-                <Link to="/">Terms of Use</Link>
+                <Link to="/TermsOfUse">Terms of Use</Link>{" "}
+                {/* Added class for easier debugging */}
               </li>
               <li>
-                <Link to="/">Privacy Policy</Link>
+                <Link to="/privacy-policy">Privacy Policy</Link>{" "}
+                {/* Fixed: Added actual route */}
               </li>
             </ul>
           </div>
+        </div>
+        <div className="developer-credit">
+          <p>
+            Built, designed and maintained by{" "}
+            <span className="company-name">Gratia Technology Pvt Ltd</span>
+          </p>
         </div>
       </div>
     </footer>

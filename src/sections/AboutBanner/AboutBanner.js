@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./AboutBanner.scss";
-import bannerOne from "../../assets/about/banner/banner_1.png";
-import bannerTwo from "../../assets/about/banner/banner_2.png";
+import bannerOne from "../../assets/about/banner/banner_1.jpeg";
+import bannerTwo from "../../assets/about/banner/banner_2.jpeg";
 import pattern from "../../assets/banner/pattern.png";
 
 const AboutBanner = () => {

@@ -13,26 +13,43 @@
         }
     }
 
-
     .about-banner-img {
         text-align: center;
         position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 20px;
+        min-height: 500px;
 
         img {
-            margin: 0 10px;
+            max-width: 280px;
+            max-height: 350px;
+            width: auto;
+            height: auto;
+            object-fit: cover;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+
+            &:first-child {
+                margin-top: 0;
+                z-index: 2;
+            }
 
             &:nth-child(2) {
-                margin-top: 120px;
+                margin-top: 80px; // Reduced from 120px for better proportion
+                z-index: 1;
             }
         }
 
         .pattern {
             position: absolute;
-            left: 0;
-            right: 0;
-            margin: auto;
+            left: 50%;
             bottom: 0;
+            transform: translateX(-50%);
             z-index: -1;
+            max-width: 400px;
+            opacity: 0.7;
         }
     }
 }
@@ -41,11 +58,11 @@
 @media (max-width: 575px) {
     .about-section {
         text-align: center;
-        height: 100%;
-        padding-top: 70px;
+        height: auto;
+        padding: 70px 0 50px;
 
         .about-banner-text {
-            margin-bottom: 20px;
+            margin-bottom: 40px;
 
             h2 {
                 font-size: 40px;
@@ -58,10 +75,22 @@
         }
 
         .about-banner-img {
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            min-height: auto;
+
             img {
+                max-width: 250px;
+                max-height: 300px;
+
                 &:nth-child(2) {
-                    margin-top: 10px;
+                    margin-top: 0; // Remove stagger on mobile
                 }
+            }
+
+            .pattern {
+                display: none; // Hide pattern on small screens
             }
         }
     }
@@ -70,14 +99,14 @@
 @media (min-width: 576px) and (max-width: 767px) {
     .about-section {
         text-align: center;
-        height: 100%;
-        padding-top: 70px;
+        height: auto;
+        padding: 70px 0 50px;
 
         .about-banner-text {
-            margin-bottom: 20px;
+            margin-bottom: 30px;
 
             h2 {
-                font-size: 40px;
+                font-size: 45px;
                 margin-bottom: 15px;
             }
 
@@ -87,11 +116,20 @@
         }
 
         .about-banner-img {
+            gap: 15px;
+            min-height: 400px;
+
             img {
-                max-width: 170px;
+                max-width: 200px;
+                max-height: 280px;
+
                 &:nth-child(2) {
-                    margin-top: 10px;
+                    margin-top: 40px; // Reduced stagger for tablets
                 }
+            }
+
+            .pattern {
+                max-width: 300px;
             }
         }
     }
@@ -101,18 +139,36 @@
 @media (min-width: 768px) and (max-width: 991px) {
     .about-section {
         text-align: center;
-        height: 100%;
-        padding: 100px 0;
+        height: auto;
+        padding: 100px 0 80px;
 
         .about-banner-text {
             h2 {
-                font-size: 40px;
-                margin-bottom: 10px;
+                font-size: 50px;
+                margin-bottom: 20px;
             }
 
             p {
                 font-size: 16px;
-                margin-bottom: 20px;
+                margin-bottom: 30px;
+            }
+        }
+
+        .about-banner-img {
+            gap: 18px;
+            min-height: 450px;
+
+            img {
+                max-width: 220px;
+                max-height: 300px;
+
+                &:nth-child(2) {
+                    margin-top: 60px;
+                }
+            }
+
+            .pattern {
+                max-width: 350px;
             }
         }
     }
@@ -121,12 +177,36 @@
 // Large Responsive
 @media (min-width: 992px) and (max-width: 1199px) {
     .about-section {
-        height: 100%;
-        padding: 100px 0;
+        height: auto;
+        padding: 100px 0 80px;
 
         .about-banner-img {
+            gap: 20px;
+            min-height: 480px;
+
             img {
-                max-width: 180px;
+                max-width: 240px;
+                max-height: 320px;
+
+                &:nth-child(2) {
+                    margin-top: 70px;
+                }
+            }
+
+            .pattern {
+                max-width: 380px;
+            }
+        }
+    }
+}
+
+// Extra Large screens
+@media (min-width: 1200px) {
+    .about-section {
+        .about-banner-img {
+            img {
+                max-width: 280px;
+                max-height: 350px;
             }
         }
     }
