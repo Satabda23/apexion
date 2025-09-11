@@ -15,7 +15,7 @@ const Testimonial = () => {
     const fetchReviews = async () => {
       try {
         const res = await axios.get(
-          `${process.env.BACKEND_URL}/api/reviews/latest`
+          `${process.env.REACT_APP_BACKEND_URL}/api/reviews/latest`
         );
         console.log("Raw response:", res.data.data.reviews);
         const formatted = res.data.data.reviews.map((item) => ({
