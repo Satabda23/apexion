@@ -138,7 +138,7 @@ const Footer = () => {
         </div>
         <div className="developer-credit">
           <p>
-            Built, designed and maintained by{" "}
+            Designed, Developed, and Maintained by{" "}
             <span className="company-name">Gratia Technology Pvt Ltd</span>
           </p>
         </div>

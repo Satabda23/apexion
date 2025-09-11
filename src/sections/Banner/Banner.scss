@@ -174,7 +174,38 @@
     }
     .banner-img-area {
         .banner-img {
-            margin-bottom: 0;
+            margin-top: 33px;
+            margin-bottom: 25px;
+        }
+
+        .info-box {
+            padding: 8px;
+            border-radius: 12px;
+            bottom: 3%;
+            
+            .info-img {
+                width: 45px;
+                height: 45px;
+                border-radius: 8px;
+                margin-right: 8px;
+            }
+            
+            .info-img img {
+                width: 45px;
+                height: 45px;
+                border-radius: 8px;
+            }
+            
+            .info-text {
+                p {
+                    font-size: 13px;
+                    font-weight: 600;
+                    
+                    small {
+                        font-size: 11px;
+                    }
+                }
+            }
         }
 
         .shapes {
@@ -192,6 +223,7 @@
         
         h1 {
             font-size: 30px;
+            margin-top: 20px;
             margin-bottom: 15px;
         }
 
@@ -237,6 +269,34 @@
     .banner-img-area {
         .banner-img {
             margin-bottom: 0;
+        }
+
+        .info-box {
+            padding: 9px;
+            border-radius: 13px;
+            
+            .info-img {
+                width: 50px;
+                height: 50px;
+                border-radius: 9px;
+                margin-right: 9px;
+            }
+            
+            .info-img img {
+                width: 50px;
+                height: 50px;
+                border-radius: 9px;
+            }
+            
+            .info-text {
+                p {
+                    font-size: 14px;
+                    
+                    small {
+                        font-size: 12px;
+                    }
+                }
+            }
         }
 
         .shapes {
@@ -299,6 +359,27 @@
     .banner-img-area {
         .banner-img {
             margin-bottom: 0;
+        }
+
+        .info-box {
+            padding: 9px;
+            
+            .info-img {
+                width: 55px;
+                height: 55px;
+                margin-right: 9px;
+            }
+            
+            .info-img img {
+                width: 55px;
+                height: 55px;
+            }
+            
+            .info-text {
+                p {
+                    font-size: 15px;
+                }
+            }
         }
 
         .shapes {
