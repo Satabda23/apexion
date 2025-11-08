@@ -6,6 +6,7 @@ const {
   verifyRecaptcha,
   getRecaptchaErrorMessage,
 } = require("../utils/recaptcha");
+const { query } = require("../db");
 
 // Convert db.query to promise-based
 const queryAsync = promisify(db.query).bind(db);
@@ -22,71 +23,59 @@ router.post("/", async (req, res) => {
   try {
     const { name, phone, email, message, recaptchaToken } = req.body;
 
-    // Get client IP and user agent for security logging
+    // Get client IP and user agent
     const clientIP =
       req.ip || req.connection.remoteAddress || req.socket.remoteAddress;
     const userAgent = req.get("User-Agent") || "";
 
-    // Validate required fields
+    // Validation
     if (!name || !phone) {
       return res.status(400).json({
         success: false,
-        message: "Name and phone number are required",
+        message: "Name and phone number are required.",
       });
     }
 
-    // Validate phone number
     if (!isValidPhone(phone)) {
       return res.status(400).json({
         success: false,
-        message: "Please enter a valid 10-digit phone number",
+        message: "Please enter a valid 10-digit phone number.",
       });
     }
 
-    // Validate email if provided
     if (email && !isValidEmail(email)) {
       return res.status(400).json({
         success: false,
-        message: "Please enter a valid email address",
+        message: "Please enter a valid email address.",
       });
     }
 
-    // 🔥 RECAPTCHA VERIFICATION
+    // reCAPTCHA validation
     if (!recaptchaToken) {
       return res.status(400).json({
         success: false,
-        message: "reCAPTCHA verification is required",
+        message: "reCAPTCHA verification is required.",
       });
     }
 
-    // Verify reCAPTCHA with Google
     const recaptchaResult = await verifyRecaptcha(recaptchaToken);
-
     if (!recaptchaResult.success) {
       const errorMessage = getRecaptchaErrorMessage(
         recaptchaResult["error-codes"]
       );
-      return res.status(400).json({
-        success: false,
-        message: errorMessage,
-      });
+      return res.status(400).json({ success: false, message: errorMessage });
     }
 
-    // 🔥 reCAPTCHA VERIFIED SUCCESSFULLY!
     console.log(`✅ reCAPTCHA verified for appointment: ${name}`);
 
-    // Check for duplicate appointment (same phone in last 24 hours)
-    const duplicateCheckQuery = `
-            SELECT id FROM appointments 
-            WHERE phone = ? AND created_at > DATE_SUB(NOW(), INTERVAL 24 HOUR)
-            LIMIT 1
-        `;
+    // Duplicate check (24 hours)
+    const duplicateQuery = `
+      SELECT id FROM appointments 
+      WHERE phone = ? AND created_at > DATE_SUB(NOW(), INTERVAL 24 HOUR)
+      LIMIT 1
+    `;
 
-    // Fixed: No destructuring, use queryAsync instead of db.query
-    const duplicateResults = await queryAsync(duplicateCheckQuery, [
-      phone.trim(),
-    ]);
-
+    const duplicateResults = await query(duplicateQuery, [phone.trim()]);
     if (duplicateResults.length > 0) {
       return res.status(400).json({
         success: false,
@@ -95,15 +84,15 @@ router.post("/", async (req, res) => {
       });
     }
 
-    // 🔥 INSERT APPOINTMENT INTO DATABASE
+    // Insert appointment
     const insertQuery = `
-            INSERT INTO appointments (
-                name, phone, email, message, status, 
-                recaptcha_verified, ip_address, user_agent, created_at
-            ) VALUES (?, ?, ?, ?, 'pending', TRUE, ?, ?, NOW())
-        `;
+      INSERT INTO appointments (
+        name, phone, email, message, status, 
+        recaptcha_verified, ip_address, user_agent, created_at
+      ) VALUES (?, ?, ?, ?, 'pending', TRUE, ?, ?, NOW())
+    `;
 
-    const appointmentData = [
+    const values = [
       name.trim(),
       phone.trim(),
       email ? email.trim() : null,
@@ -112,11 +101,9 @@ router.post("/", async (req, res) => {
       userAgent,
     ];
 
-    // Fixed: No destructuring, use queryAsync instead of db.execute
-    const insertResult = await queryAsync(insertQuery, appointmentData);
-    const appointmentId = insertResult.insertId;
+    const result = await query(insertQuery, values);
+    const appointmentId = result.insertId;
 
-    // Log successful appointment creation
     console.log("📅 New appointment created:", {
       id: appointmentId,
       name: name.trim(),
@@ -126,13 +113,12 @@ router.post("/", async (req, res) => {
       timestamp: new Date().toISOString(),
     });
 
-    // Send success response
-    res.json({
+    res.status(200).json({
       success: true,
       message:
         "Appointment request submitted successfully! We will contact you soon to confirm your appointment.",
       data: {
-        appointmentId: appointmentId,
+        appointmentId,
         name: name.trim(),
         phone: phone.trim(),
         status: "pending",
@@ -140,16 +126,10 @@ router.post("/", async (req, res) => {
     });
   } catch (error) {
     console.error("❌ Error processing appointment:", error);
-
-    // Check if it's a database error
-    if (error.code) {
-      console.error("Database error code:", error.code);
-      console.error("Database error message:", error.message);
-    }
-
     res.status(500).json({
       success: false,
       message: "Server error. Please try again later or call us directly.",
+      error: error.message,
     });
   }
 });
