@@ -136,7 +136,7 @@
       }
 
       .login-button {
-        width: 100%;
+        width: 80%;
         padding: 0.75rem;
         background: #3b82f6;
         color: white;
@@ -146,6 +146,8 @@
         cursor: pointer;
         transition: all 0.2s;
         font-size: 0.875rem;
+        display: block;
+        margin: 0 auto;
 
         &:hover:not(:disabled) {
           background: #2563eb;
@@ -190,12 +192,12 @@
     .dashboard-title {
       font-size: 1.875rem;
       font-weight: 700;
-      color: #111827;
+      color: #0a1fe4;
       margin-bottom: 0.25rem;
     }
 
     .dashboard-subtitle {
-      color: #6b7280;
+      color: #011002;
     }
   }
 
@@ -1137,6 +1139,7 @@
           line-height: 1.5;
           display: -webkit-box;
           -webkit-line-clamp: 3;
+          line-clamp: 3;
           -webkit-box-orient: vertical;
           overflow: hidden;
           text-overflow: ellipsis;

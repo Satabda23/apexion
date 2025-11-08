@@ -1,120 +1,148 @@
-// src/admin/pages/ReviewModeration.jsx
-import React, { useState, useEffect } from 'react';
-import { toast } from 'react-toastify';
-import ReviewCard from '../components/ReviewCard';
-import { Star, TrendingUp, Filter } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import { toast } from "react-toastify";
+import ReviewCard from "../components/ReviewCard";
+import { Star, TrendingUp } from "lucide-react";
+import {reviewApiService} from "../services/reviewApiService";
+
 
 const ReviewModeration = () => {
   const [reviews, setReviews] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [filterStatus, setFilterStatus] = useState('all');
-
-  // Mock data - replace with API call
-  useEffect(() => {
-    setTimeout(() => {
-      setReviews([
-        {
-          id: 1,
-          name: 'Satabda Hazarika',
-          text: 'One of the best clinics in town. I\'m happy with their professional behavior. The staff is very courteous and Dr. Deepika is extremely skilled. My root canal treatment was completely painless.',
-          rating: 5,
-          status: 'approved',
-          createdAt: '2025-08-25'
-        },
-        {
-          id: 2,
-          name: 'Biju Pegu',
-          text: 'Exceptional professionalism delivered by the team. The clinic is very clean and modern. Highly recommend for any dental work.',
-          rating: 5,
-          status: 'approved',
-          createdAt: '2025-08-24'
-        },
-        {
-          id: 3,
-          name: 'Anonymous Patient',
-          text: 'Great service but waiting time was a bit long. The treatment quality is excellent though. Would definitely come back.',
-          rating: 4,
-          status: 'pending',
-          createdAt: '2025-08-27'
-        },
-        {
-          id: 4,
-          name: 'Ravi Kumar',
-          text: 'Doctor explained everything clearly before the procedure. Very satisfied with the teeth whitening results. Fair pricing too.',
-          rating: 5,
-          status: 'pending',
-          createdAt: '2025-08-26'
-        },
-        {
-          id: 5,
-          name: 'Priya Das',
-          text: 'Excellent dental care. The clinic has all modern equipment. Dr. Deepika is very gentle and experienced.',
-          rating: 5,
-          status: 'approved',
-          createdAt: '2025-08-23'
-        },
-        {
-          id: 6,
-          name: 'Unhappy Customer',
-          text: 'Treatment was okay but receptionist was rude. Also felt rushed during consultation.',
-          rating: 2,
-          status: 'pending',
-          createdAt: '2025-08-28'
-        }
-      ]);
-      setLoading(false);
-    }, 1000);
-  }, []);
-
-  const filteredReviews = reviews.filter(review => {
-    if (filterStatus === 'all') return true;
-    return review.status === filterStatus;
+  const [loading, setLoading] = useState(false);
+  const [filterStatus, setFilterStatus] = useState("all");
+  const [stats, setStats] = useState({
+    total: 0,
+    ratings: {},
+    averageRating: 0,
   });
 
-  const handleApprove = (reviewId) => {
-    setReviews(reviews.map(review => 
-      review.id === reviewId ? { ...review, status: 'approved' } : review
-    ));
-    const review = reviews.find(r => r.id === reviewId);
-    toast.success(`Review by ${review.name} approved`);
-  };
+  // ✅ Fetch reviews & stats from API
+ useEffect(() => {
+  const fetchReviews = async () => {
+    try {
+      setLoading(true);
+      console.log("Fetching reviews and stats...");
 
-  const handleReject = (reviewId) => {
-    if (window.confirm('Are you sure you want to reject this review? This action cannot be undone.')) {
-      setReviews(reviews.filter(review => review.id !== reviewId));
-      toast.success('Review rejected and removed');
+      // Sequentially fetch reviews and then stats
+      const reviewRes = await reviewApiService.getReviews();
+      const statsRes = await reviewApiService.getReviewStats();
+
+      console.log("reviewRes", reviewRes, "statsRes", statsRes);
+
+      setReviews(reviewRes.data.reviews || []);
+      setStats({
+        total: statsRes.data.totalReviews || 0,
+ratings: statsRes.data.ratingDistribution || {},
+        averageRating: statsRes.data.averageRating?.toFixed(1) || 0,
+      });
+    } catch (error) {
+      console.error("Error fetching reviews:", error);
+      toast.error("Failed to load reviews. Please try again later.");
+    } finally {
+      setLoading(false);
     }
   };
 
+  fetchReviews();
+}, []);
+
+
+  // ✅ Filter reviews by status (all/pending/approved)
+  const filteredReviews = reviews.filter((review) => {
+    if (filterStatus === "all") return true;
+    return review.status === filterStatus;
+  });
+
+    // const filteredReviews = [
+    //     {
+    //       id: 1,
+    //       name: 'Satabda Hazarika',
+    //       text: 'One of the best clinics in town. I\'m happy with their professional behavior. The staff is very courteous and Dr. Deepika is extremely skilled. My root canal treatment was completely painless.',
+    //       rating: 5,
+    //       status: 'approved',
+    //       createdAt: '2025-08-25'
+    //     },
+    //     {
+    //       id: 2,
+    //       name: 'Biju Pegu',
+    //       text: 'Exceptional professionalism delivered by the team. The clinic is very clean and modern. Highly recommend for any dental work.',
+    //       rating: 5,
+    //       status: 'approved',
+    //       createdAt: '2025-08-24'
+    //     },
+    //     {
+    //       id: 3,
+    //       name: 'Anonymous Patient',
+    //       text: 'Great service but waiting time was a bit long. The treatment quality is excellent though. Would definitely come back.',
+    //       rating: 4,
+    //       status: 'pending',
+    //       createdAt: '2025-08-27'
+    //     },
+    //     {
+    //       id: 4,
+    //       name: 'Ravi Kumar',
+    //       text: 'Doctor explained everything clearly before the procedure. Very satisfied with the teeth whitening results. Fair pricing too.',
+    //       rating: 5,
+    //       status: 'pending',
+    //       createdAt: '2025-08-26'
+    //     },
+    //     {
+    //       id: 5,
+    //       name: 'Priya Das',
+    //       text: 'Excellent dental care. The clinic has all modern equipment. Dr. Deepika is very gentle and experienced.',
+    //       rating: 5,
+    //       status: 'approved',
+    //       createdAt: '2025-08-23'
+    //     },
+    //     {
+    //       id: 6,
+    //       name: 'Unhappy Customer',
+    //       text: 'Treatment was okay but receptionist was rude. Also felt rushed during consultation.',
+    //       rating: 2,
+    //       status: 'pending',
+    //       createdAt: '2025-08-28'
+    //     }
+    //   ]
+
+  // ✅ Approve review
+  const handleApprove = async (reviewId) => {
+    try {
+      const review = reviews.find((r) => r.id === reviewId);
+      await reviewApiService.updateReview(reviewId, { status: "approve" });
+      setReviews(
+        reviews.map((r) =>
+          r.id === reviewId ? { ...r, status: "approved" } : r
+        )
+      );
+      toast.success(`Review by ${review.name} approved`);
+    } catch (error) {
+      console.error("Error approving review:", error);
+      toast.error("Failed to approve review");
+    }
+  };
+
+  // ✅ Reject/Delete review
+  const handleReject = async (reviewId) => {
+    if (
+      window.confirm(
+        "Are you sure you want to reject this review? This action cannot be undone."
+      )
+    ) {
+      try {
+        await reviewApiService.updateReview(reviewId, { status: "reject" });
+        setReviews(reviews.filter((r) => r.id !== reviewId));
+        toast.success("Review rejected and removed");
+      } catch (error) {
+        console.error("Error deleting review:", error);
+        toast.error("Failed to remove review");
+      }
+    }
+  };
+
+  // ✅ View full review (e.g., show in modal later)
   const handleViewFull = (review) => {
     toast.info(`Opening full review by ${review.name}`);
-    // In real app, open detailed modal with full review
+    // Optional: open modal here
   };
-
-  const getReviewStats = () => {
-    const total = reviews.length;
-    const approved = reviews.filter(r => r.status === 'approved').length;
-    const pending = reviews.filter(r => r.status === 'pending').length;
-    
-    const ratingBreakdown = reviews.reduce((acc, review) => {
-      acc[review.rating] = (acc[review.rating] || 0) + 1;
-      return acc;
-    }, {});
-
-    const averageRating = reviews.length > 0 
-      ? reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length 
-      : 0;
-
-    return {
-      total,
-      approved,
-      pending,
-      ratings: ratingBreakdown,
-      averageRating: averageRating.toFixed(1)
-    };
-  };
-
-  const stats = getReviewStats();
 
   if (loading) {
     return (
@@ -128,16 +156,19 @@ const ReviewModeration = () => {
 
   return (
     <div className="reviews-page">
+      {/* Header Section */}
       <div className="page-header">
         <div className="header-content">
           <h1 className="page-title">
             <Star className="title-icon" />
             Reviews & Testimonials
           </h1>
-          <p className="page-description">Moderate patient reviews and manage testimonials</p>
+          <p className="page-description">
+            Moderate patient reviews and manage testimonials
+          </p>
         </div>
         <div className="header-actions">
-          <select 
+          <select
             value={filterStatus}
             onChange={(e) => setFilterStatus(e.target.value)}
             className="filter-select"
@@ -155,14 +186,7 @@ const ReviewModeration = () => {
           <p className="stat-number total">{stats.total}</p>
           <p className="stat-label">Total Reviews</p>
         </div>
-        <div className="stat-card">
-          <p className="stat-number pending">{stats.pending}</p>
-          <p className="stat-label">Pending</p>
-        </div>
-        <div className="stat-card">
-          <p className="stat-number approved">{stats.approved}</p>
-          <p className="stat-label">Approved</p>
-        </div>
+
         <div className="stat-card">
           <div className="rating-display">
             <Star className="rating-star" />
@@ -179,10 +203,11 @@ const ReviewModeration = () => {
           Rating Distribution
         </h3>
         <div className="distribution-chart">
-          {[5, 4, 3, 2, 1].map(rating => {
-            const count = stats.ratings[rating] || 0;
+          {[5, 4, 3, 2, 1].map((rating) => {
+             const ratingData = stats.ratings[rating] || { count: 0 };
+            const count = ratingData.count || 0;
             const percentage = stats.total > 0 ? (count / stats.total) * 100 : 0;
-            
+
             return (
               <div key={rating} className="rating-row">
                 <div className="rating-label">
@@ -190,8 +215,8 @@ const ReviewModeration = () => {
                   <Star className="rating-star" />
                 </div>
                 <div className="rating-bar">
-                  <div 
-                    className="rating-fill" 
+                  <div
+                    className="rating-fill"
                     style={{ width: `${percentage}%` }}
                   ></div>
                 </div>
@@ -205,7 +230,7 @@ const ReviewModeration = () => {
       {/* Reviews Grid */}
       <div className="reviews-grid">
         {filteredReviews.length > 0 ? (
-          filteredReviews.map(review => (
+          filteredReviews.map((review) => (
             <ReviewCard
               key={review.id}
               review={review}
@@ -217,9 +242,11 @@ const ReviewModeration = () => {
         ) : (
           <div className="empty-state">
             <Star className="empty-icon" />
-            <p className="empty-message">No reviews found for the selected filter.</p>
-            <button 
-              onClick={() => setFilterStatus('all')}
+            <p className="empty-message">
+              No reviews found for the selected filter.
+            </p>
+            <button
+              onClick={() => setFilterStatus("all")}
               className="show-all-btn"
             >
               Show all reviews

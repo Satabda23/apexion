@@ -1,11 +1,18 @@
 // src/admin/components/ContactTable.jsx
 import React, { useState } from 'react';
-import StatusBadge from './StatusBadge';
-import { Mail, CheckCircle, Eye, Search } from 'lucide-react';
+// import StatusBadge from './StatusBadge';
+import { 
+  // Mail, 
+  // CheckCircle,
+  //  Eye, 
+   Search } from 'lucide-react';
 
 const ContactTable = ({ contacts, onReply, onMarkReplied, onViewDetails }) => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [statusFilter, setStatusFilter] = useState('');
+  const [
+    statusFilter, 
+    // setStatusFilter
+  ] = useState('');
 
   const filteredContacts = contacts.filter(contact => {
     const matchesSearch = contact.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -29,7 +36,7 @@ const ContactTable = ({ contacts, onReply, onMarkReplied, onViewDetails }) => {
               className="search-input"
             />
           </div>
-          <div className="filter-controls">
+          {/* <div className="filter-controls">
             <select 
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
@@ -40,7 +47,7 @@ const ContactTable = ({ contacts, onReply, onMarkReplied, onViewDetails }) => {
               <option value="replied">Replied</option>
               <option value="closed">Closed</option>
             </select>
-          </div>
+          </div> */}
         </div>
       </div>
 
@@ -52,8 +59,8 @@ const ContactTable = ({ contacts, onReply, onMarkReplied, onViewDetails }) => {
               <th className="header-cell">Service Interest</th>
               <th className="header-cell">Message</th>
               <th className="header-cell">Date</th>
-              <th className="header-cell">Status</th>
-              <th className="header-cell">Actions</th>
+              {/* <th className="header-cell">Status</th> */}
+              {/* <th className="header-cell">Actions</th> */}
             </tr>
           </thead>
           <tbody className="table-body">
@@ -83,20 +90,15 @@ const ContactTable = ({ contacts, onReply, onMarkReplied, onViewDetails }) => {
                   </p>
                 </td>
                 <td className="table-cell date-info" data-label="Date">
-                  {contact.createdAt}
+                  {contact.formattedDate}
                 </td>
-                <td className="table-cell" data-label="Status">
+                {/* <td className="table-cell" data-label="Status">
                   <StatusBadge status={contact.status} />
-                </td>
-                <td className="table-cell actions-cell" data-label="Actions">
+                </td> */}
+                {/* <td className="table-cell actions-cell" data-label="Actions">
                   <div className="actions-container">
-                    <button 
-                      onClick={() => onViewDetails(contact)}
-                      className="action-button view-button"
-                      title="View Details"
-                    >
-                      <Eye className="w-4 h-4" />
-                    </button>
+                    
+
                     <button 
                       onClick={() => onReply(contact)}
                       className="action-button reply-button"
@@ -114,7 +116,7 @@ const ContactTable = ({ contacts, onReply, onMarkReplied, onViewDetails }) => {
                       </button>
                     )}
                   </div>
-                </td>
+                </td> */}
               </tr>
             ))}
           </tbody>

@@ -1,7 +1,16 @@
 // src/admin/pages/AdminSettings.jsx
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
-import { Settings, Save, Clock, Bell, Shield, Database, Mail, Phone } from 'lucide-react';
+import { 
+  Settings, 
+  Save,
+  //  Clock,
+    Bell, 
+    Shield, 
+    Database, 
+    Mail, 
+    Phone 
+  } from 'lucide-react';
 
 const AdminSettings = () => {
   const [clinicSettings, setClinicSettings] = useState({
@@ -13,15 +22,15 @@ const AdminSettings = () => {
     website: 'www.apexiondentalclinic.com'
   });
 
-  const [workingHours, setWorkingHours] = useState({
-    monday: { open: '09:00', close: '18:00', closed: false },
-    tuesday: { open: '09:00', close: '18:00', closed: false },
-    wednesday: { open: '09:00', close: '18:00', closed: false },
-    thursday: { open: '09:00', close: '18:00', closed: false },
-    friday: { open: '09:00', close: '18:00', closed: false },
-    saturday: { open: '09:00', close: '16:00', closed: false },
-    sunday: { open: '', close: '', closed: true }
-  });
+  // const [workingHours, setWorkingHours] = useState({
+  //   monday: { open: '09:00', close: '18:00', closed: false },
+  //   tuesday: { open: '09:00', close: '18:00', closed: false },
+  //   wednesday: { open: '09:00', close: '18:00', closed: false },
+  //   thursday: { open: '09:00', close: '18:00', closed: false },
+  //   friday: { open: '09:00', close: '18:00', closed: false },
+  //   saturday: { open: '09:00', close: '16:00', closed: false },
+  //   sunday: { open: '', close: '', closed: true }
+  // });
 
   const [systemSettings, setSystemSettings] = useState({
     autoConfirmAppointments: true,
@@ -56,12 +65,12 @@ const AdminSettings = () => {
     setClinicSettings({ ...clinicSettings, [key]: value });
   };
 
-  const handleWorkingHoursChange = (day, field, value) => {
-    setWorkingHours({
-      ...workingHours,
-      [day]: { ...workingHours[day], [field]: value }
-    });
-  };
+  // const handleWorkingHoursChange = (day, field, value) => {
+  //   setWorkingHours({
+  //     ...workingHours,
+  //     [day]: { ...workingHours[day], [field]: value }
+  //   });
+  // };
 
   const handleSystemSettingsChange = (key, value) => {
     setSystemSettings({ ...systemSettings, [key]: value });
@@ -103,15 +112,15 @@ const AdminSettings = () => {
     }
   };
 
-  const dayNames = {
-    monday: 'Monday',
-    tuesday: 'Tuesday',
-    wednesday: 'Wednesday',
-    thursday: 'Thursday',
-    friday: 'Friday',
-    saturday: 'Saturday',
-    sunday: 'Sunday'
-  };
+  // const dayNames = {
+  //   monday: 'Monday',
+  //   tuesday: 'Tuesday',
+  //   wednesday: 'Wednesday',
+  //   thursday: 'Thursday',
+  //   friday: 'Friday',
+  //   saturday: 'Saturday',
+  //   sunday: 'Sunday'
+  // };
 
   return (
     <div className="admin-settings">
@@ -188,7 +197,7 @@ const AdminSettings = () => {
       </div>
 
       {/* Working Hours */}
-      <div className="settings-section working-hours">
+      {/* <div className="settings-section working-hours">
         <div className="section-header">
           <h3 className="section-title">
             <Clock className="section-icon" />
@@ -241,7 +250,7 @@ const AdminSettings = () => {
             ))}
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* System Preferences */}
       <div className="settings-section system-preferences">

@@ -50,7 +50,7 @@ const ReviewCard = ({ review, onApprove, onReject, onViewFull }) => {
       <div className="review-footer">
         <span className="review-date">{createdAt}</span>
         
-        {status === 'pending' && (
+       
           <div className="review-actions">
             <button 
               onClick={() => onApprove(id)}
@@ -67,16 +67,15 @@ const ReviewCard = ({ review, onApprove, onReject, onViewFull }) => {
               <span>Reject</span>
             </button>
           </div>
-        )}
 
-        {status === 'approved' && (
+        {status === 'approve' && (
           <div className="status-indicator published">
             <CheckCircle className="status-icon" />
             <span>Published</span>
           </div>
         )}
 
-        {status === 'rejected' && (
+        {status === 'reject' && (
           <div className="status-indicator rejected">
             <XCircle className="status-icon" />
             <span>Rejected</span>
@@ -84,7 +83,7 @@ const ReviewCard = ({ review, onApprove, onReject, onViewFull }) => {
         )}
       </div>
 
-      <div className="review-details-section">
+      {/* <div className="review-details-section">
         <button 
           onClick={() => onViewFull(review)}
           className="view-details-btn"
@@ -92,7 +91,7 @@ const ReviewCard = ({ review, onApprove, onReject, onViewFull }) => {
           <Eye className="details-icon" />
           <span>View Details</span>
         </button>
-      </div>
+      </div> */}
     </div>
   );
 };

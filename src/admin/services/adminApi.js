@@ -19,21 +19,23 @@ class AdminApi {
   // Helper method for API calls
   async request(endpoint, options = {}) {
     const url = `${this.baseURL}${endpoint}`;
+    console.log(url, options);
     const config = {
       headers: this.getAuthHeaders(),
       ...options,
     };
 
     try {
+      console.log(`Making API request to: ${url}`, config);
       const response = await fetch(url, config);
-
+      console.log("Response received:", response);
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
         throw new Error(
           errorData.message || `HTTP error! status: ${response.status}`
         );
       }
-
+      console.log("Response JSON:", await response.clone().json());
       return await response.json();
     } catch (error) {
       console.error(`API Error: ${endpoint}`, error);
@@ -41,16 +43,35 @@ class AdminApi {
     }
   }
 
-  // Authentication
+  // Authentication - MODIFIED to auto-store tokens
   async login(credentials) {
-    return this.request("/admin/login", {
+    const response = await this.request("/admin/login", {
       method: "POST",
       body: JSON.stringify(credentials),
     });
+
+    // Automatically store token and user data if login is successful
+    if (response.success && response.token) {
+      console.log("💾 Storing token in localStorage...");
+      localStorage.setItem("adminToken", response.token);
+    }
+
+    if (response.success && response.user) {
+      console.log("💾 Storing user in localStorage...");
+      localStorage.setItem("adminUser", JSON.stringify(response.user));
+    }
+
+    return response;
   }
 
   async logout() {
-    return this.request("/admin/logout", { method: "POST" });
+    const response = await this.request("/admin/logout", { method: "POST" });
+
+    // Clear stored data on logout
+    localStorage.removeItem("adminToken");
+    localStorage.removeItem("adminUser");
+
+    return response;
   }
 
   // Dashboard
@@ -167,11 +188,15 @@ class AdminApi {
   }
 
   // Reviews
-  async getReviews(filters = {}) {
-    const queryParams = new URLSearchParams(filters).toString();
-    return this.request(
-      `/admin/reviews${queryParams ? `?${queryParams}` : ""}`
-    );
+  // async getReviews(filters = {}) {
+  //   const queryParams = new URLSearchParams(filters).toString();
+  //   return this.request(
+  //     `/admin/reviews${queryParams ? `?${queryParams}` : ""}`
+  //   );
+  // }
+
+  async getReviews(params) {
+    return this.request(`/admin/reviews${params ? `?${params}` : ""}`);
   }
 
   async getReview(id) {
@@ -207,7 +232,6 @@ class AdminApi {
       method: "POST",
       body: formData,
       headers: {
-        // Remove Content-Type to let browser set it with boundary
         Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
       },
     });

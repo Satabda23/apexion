@@ -1,5 +1,5 @@
-import React, { useState } from "react";
 import axios from "axios";
+import { useState } from "react";
 import "./Testimonial.scss";
 
 const SubmitTestimonial = ({ onSubmit }) => {
@@ -18,6 +18,7 @@ const SubmitTestimonial = ({ onSubmit }) => {
     e.preventDefault();
 
     try {
+      console.log("sending");
       // 1. Send to backend
       await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/api/reviews/user`,

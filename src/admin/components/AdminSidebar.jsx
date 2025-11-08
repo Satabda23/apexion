@@ -2,17 +2,17 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { 
-  Calendar,
-  Users, 
+  Calendar, 
   MessageSquare,
   Star,
-  Settings, 
-  Bell, 
-  Menu, 
+  // Settings, 
+  // Bell, 
+  Menu,
+  X,  
   Home,
   LogOut,
-  Image,
-  User
+  // Image,
+  // User
 } from 'lucide-react';
 import '../styles/admin.scss';
 import '../styles/components.scss';
@@ -25,12 +25,12 @@ const AdminSidebar = ({ isOpen, onToggle }) => {
   const sidebarItems = [
     { id: 'dashboard', label: 'Dashboard', icon: Home, path: '/admin/dashboard' },
     { id: 'appointments', label: 'Appointments', icon: Calendar, path: '/admin/appointments' },
-    { id: 'patients', label: 'Patient Records', icon: User, path: '/admin/patients' },
+    // { id: 'patients', label: 'Patient Records', icon: User, path: '/admin/patients' },
     { id: 'contacts', label: 'Contact Inquiries', icon: MessageSquare, path: '/admin/contacts' },
     { id: 'reviews', label: 'Reviews', icon: Star, path: '/admin/reviews' },
-    { id: 'content', label: 'Content Management', icon: Image, path: '/admin/content' },
-    { id: 'notifications', label: 'Notifications', icon: Bell, path: '/admin/notifications' },
-    { id: 'settings', label: 'Settings', icon: Settings, path: '/admin/settings' }
+    // { id: 'content', label: 'Content Management', icon: Image, path: '/admin/content' },
+    // { id: 'notifications', label: 'Notifications', icon: Bell, path: '/admin/notifications' },
+    // { id: 'settings', label: 'Settings', icon: Settings, path: '/admin/settings' }
   ];
 
   const handleLogout = () => {
@@ -50,7 +50,7 @@ const AdminSidebar = ({ isOpen, onToggle }) => {
         {isOpen && (
           <div className="logo">
             <div className="logo-icon">
-              <span>A</span>
+              <img src="/favicon.png" alt="Logo" />
             </div>
             <span className="logo-text">Apexion Admin</span>
           </div>
@@ -59,7 +59,7 @@ const AdminSidebar = ({ isOpen, onToggle }) => {
           onClick={onToggle}
           className="toggle-btn"
         >
-          <Menu className="w-5 h-5" />
+          {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
         </button>
       </div>
 
