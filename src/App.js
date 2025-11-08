@@ -16,6 +16,8 @@ import Contactus from "./pages/Contact/Contactus";
 import AdminPanel from "./admin/AdminPanel";
 import AdminLogin from "./admin/pages/AdminLogin";
 import ProtectedRoute from "./admin/components/ProtectedRoute";
+import PrivacyPolicy from "./pages/PrivacyPolicy/PrivacyPolicy.jsx";
+import TermsOfUse from "./pages/TermsUse/TermsUse.jsx";
 import "react-toastify/dist/ReactToastify.css";
 import "./admin/styles/admin.scss";
 import "./admin/styles/components.scss";
@@ -30,6 +32,8 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/services" element={<Services />} />
         <Route path="/contact" element={<Contactus />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/terms-of-use" element={<TermsOfUse />} />
         {/* <Route path="/team" element={<TeamDetails />} /> */}
         {/* <Route path="/TermsOfUse" element={<TermsOfUse />} /> */}
 

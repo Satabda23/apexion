@@ -1,15 +1,22 @@
+const morgan = require("morgan");
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-require("dotenv").config(); // ← NEW: Load environment variables
-require("./db"); // ← NEW: Ensure DB connection is established
+require("dotenv").config();
+require("./db");
+
 const reviewRoutes = require("./routes/reviews");
 const contactRoutes = require("./routes/contact");
-const appointmentRoutes = require("./routes/appointments"); // ← NEW: Import appointments route
-
+const appointmentRoutes = require("./routes/appointments");
+const adminRoutes = require("./routes/admin");
+const adminappointmentRoutes = require("./routes/adminAppointments");
+const adminEnquiryRoutes = require("./routes/adminEnquiry");
+const adminReviewRoutes = require("./routes/adminReviews");
 const app = express();
+
 app.use(
   cors({
+    // origin: "*",
     origin: ["http://localhost:3000", process.env.FRONTEND_URL],
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
@@ -17,7 +24,6 @@ app.use(
 );
 app.use(bodyParser.json());
 
-// ← NEW: Middleware for client IP tracking (needed for security logging)
 app.use((req, res, next) => {
   req.ip =
     req.headers["x-forwarded-for"] ||
@@ -26,11 +32,15 @@ app.use((req, res, next) => {
     (req.connection.socket ? req.connection.socket.remoteAddress : null);
   next();
 });
-
+app.use(morgan("tiny"));
 // routes
 app.use("/api/reviews", reviewRoutes);
 app.use("/api", contactRoutes);
-app.use("/api/appointments", appointmentRoutes); // ← NEW: Use the new appointments route
+app.use("/api/appointments", appointmentRoutes);
+app.use("/api/admin", adminRoutes);
+app.use("/api/admin/appointments", adminappointmentRoutes);
+app.use("/api/admin/enquiries", adminEnquiryRoutes);
+app.use("/api/admin/reviews", adminReviewRoutes);
 
 app.get("/api/health", (req, res) => {
   res.json({

@@ -74,12 +74,14 @@ class AppointmentApiService {
 
   // Update appointment
   async updateAppointment(id, appointmentData) {
-    const errors = this.validateAppointmentData(appointmentData);
-    if (errors.length > 0) {
-      throw new Error(`Validation errors: ${errors.join(", ")}`);
-    }
+    console.log(id, appointmentData);
+    // const errors = this.validateAppointmentData(appointmentData);
+    // console.log("Validation errors:", errors);
+    // if (errors.length > 0) {
+    //   throw new Error(`Validation errors: ${errors.join(", ")}`);
+    // }
 
-    return adminApi.updateAppointment(id, appointmentData);
+    return adminApi.updateAppointmentStatus(id, appointmentData);
   }
 
   // Bulk update appointments

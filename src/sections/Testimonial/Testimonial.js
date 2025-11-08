@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react";
-import SubmitTestimonial from "./SubmitTestimonial";
-import "./Testimonial.scss";
-import SectionTitle from "../../components/SectionTitle/SectionTitle";
-import TestimoniCard from "../../components/TestimoniCard/TestimoniCard";
+import { useEffect, useState } from "react";
 import { AiFillStar } from "react-icons/ai";
 import Slider from "react-slick";
-import axios from "axios";
+import SectionTitle from "../../components/SectionTitle/SectionTitle";
+import TestimoniCard from "../../components/TestimoniCard/TestimoniCard";
+import SubmitTestimonial from "./SubmitTestimonial";
+import "./Testimonial.scss";
 
 const Testimonial = () => {
   const [testimonails, setTestimonials] = useState([]);
@@ -14,16 +13,25 @@ const Testimonial = () => {
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const res = await axios.get(
+        const res = await fetch(
           `${process.env.REACT_APP_BACKEND_URL}/api/reviews/latest`
         );
-        console.log("Raw response:", res.data.data.reviews);
-        const formatted = res.data.data.reviews.map((item) => ({
+
+        if (!res.ok) {
+          throw new Error(`HTTP error! Status: ${res.status}`);
+        }
+
+        const data = await res.json();
+        console.log("Raw response:", data.data.reviews);
+
+        const formatted = data.data.reviews.map((item) => ({
           name: item.name,
           description: item.text,
           rating: item.rating,
         }));
+
         console.log("Fetched reviews:", formatted);
+
         // Optional: Add default reviews if no DB reviews found
         if (formatted.length === 0) {
           setTestimonials([
@@ -52,6 +60,7 @@ const Testimonial = () => {
 
   // ✅ Add new review instantly
   const handleNewReview = (newReview) => {
+    console.log("submitting");
     setTestimonials((prev) => [newReview, ...prev]);
   };
 

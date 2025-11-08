@@ -1,39 +1,39 @@
 // src/admin/components/RecentReviews.jsx
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import StatusBadge from './StatusBadge';
+// import StatusBadge from './StatusBadge';
 import { Star, MessageSquare } from 'lucide-react';
 
-const RecentReviews = () => {
+const RecentReviews = ({recentReviews}) => {
   const navigate = useNavigate();
   
   // This will be replaced with actual data from API
-  const recentReviews = [
-    {
-      id: 1,
-      name: 'Satabda Hazarika',
-      text: 'One of the best clinics in town. Professional behavior.',
-      rating: 5,
-      status: 'approved',
-      createdAt: '2025-08-25'
-    },
-    {
-      id: 2,
-      name: 'Anonymous Patient',
-      text: 'Great service but waiting time was long',
-      rating: 4,
-      status: 'pending',
-      createdAt: '2025-08-27'
-    },
-    {
-      id: 3,
-      name: 'Biju Pegu',
-      text: 'Exceptional professionalism delivered by the team.',
-      rating: 5,
-      status: 'approved',
-      createdAt: '2025-08-24'
-    }
-  ];
+  // const recentReviews = [
+  //   {
+  //     id: 1,
+  //     name: 'Satabda Hazarika',
+  //     text: 'One of the best clinics in town. Professional behavior.',
+  //     rating: 5,
+  //     status: 'approved',
+  //     createdAt: '2025-08-25'
+  //   },
+  //   {
+  //     id: 2,
+  //     name: 'Anonymous Patient',
+  //     text: 'Great service but waiting time was long',
+  //     rating: 4,
+  //     status: 'pending',
+  //     createdAt: '2025-08-27'
+  //   },
+  //   {
+  //     id: 3,
+  //     name: 'Biju Pegu',
+  //     text: 'Exceptional professionalism delivered by the team.',
+  //     rating: 5,
+  //     status: 'approved',
+  //     createdAt: '2025-08-24'
+  //   }
+  // ];
 
   return (
     <div className="recent-reviews">
@@ -62,7 +62,7 @@ const RecentReviews = () => {
                       <Star key={i} className="star-icon" />
                     ))}
                   </div>
-                  <StatusBadge status={review.status} />
+                  {/* <StatusBadge status={review.status} /> */}
                 </div>
               </div>
               <p className="review-text">{review.text}</p>

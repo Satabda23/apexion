@@ -109,8 +109,8 @@
       transition: opacity 0.2s ease-in-out;
 
       .logo-icon {
-        width: 2rem;
-        height: 2rem;
+        width: 1.5rem;
+        height: 1.5rem;
         background: linear-gradient(135deg, #3b82f6, #1d4ed8);
         border-radius: 0.5rem;
         display: flex;
@@ -124,7 +124,7 @@
 
       .logo-text {
         font-weight: 600;
-        color: #111827;
+        color: #ebedf1;
         font-size: 1.125rem;
         white-space: nowrap;
       }
@@ -431,8 +431,8 @@
         }
 
         .user-avatar {
-          width: 2rem;
-          height: 2rem;
+          width: 1.5rem;
+          height: 1.5rem;
           background: linear-gradient(135deg, #3b82f6, #1d4ed8);
           border-radius: 50%;
           display: flex;
@@ -450,19 +450,19 @@
           }
 
           .user-name {
-            font-size: 0.875rem;
-            font-weight: 500;
-            color: #111827;
+            font-size: 0.975rem;
+            font-weight: 800;
+            color: #e7e9ed;
             margin: 0;
-            line-height: 1.2;
+            line-height: 1.6;
           }
 
-          .user-role {
-            font-size: 0.75rem;
-            color: #6b7280;
-            margin: 0;
-            line-height: 1.2;
-          }
+          // .user-role {
+          //   font-size: 0.75rem;
+          //   color: #6b7280;
+          //   margin: 0;
+          //   line-height: 1.2;
+          // }
         }
       }
     }

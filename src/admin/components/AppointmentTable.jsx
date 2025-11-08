@@ -1,7 +1,10 @@
 // src/admin/components/AppointmentTable.jsx
 import React, { useState } from 'react';
 import StatusBadge from './StatusBadge';
-import { Phone, Mail, Search } from 'lucide-react';
+import { 
+  // Phone, 
+  // Mail, 
+  Search } from 'lucide-react';
 
 const AppointmentTable = ({ appointments, onStatusUpdate, onSendNotification }) => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -13,6 +16,25 @@ const AppointmentTable = ({ appointments, onStatusUpdate, onSendNotification }) 
     const matchesStatus = statusFilter === '' || appointment.status === statusFilter;
     return matchesSearch && matchesStatus;
   });
+  
+  function formatDateTime(isoString) {
+  if (!isoString) return "N/A";
+
+  const date = new Date(isoString);
+
+  // Example output: 1 September 2025, 12:19 PM
+  const formatted = date.toLocaleString("en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true,
+  });
+
+  return formatted;
+}
+
 
   return (
     <div className="appointment-table">
@@ -49,7 +71,7 @@ const AppointmentTable = ({ appointments, onStatusUpdate, onSendNotification }) 
           <thead className="table-head">
             <tr>
               <th className="header-cell">Patient</th>
-              <th className="header-cell">Service</th>
+              {/* <th className="header-cell">Service</th> */}
               <th className="header-cell">Date & Time</th>
               <th className="header-cell">Status</th>
               <th className="header-cell">Actions</th>
@@ -69,11 +91,11 @@ const AppointmentTable = ({ appointments, onStatusUpdate, onSendNotification }) 
                     )}
                   </div>
                 </td>
-                <td className="table-cell service-info" data-label="Service">
+                {/* <td className="table-cell service-info" data-label="Service">
                   {appointment.service}
-                </td>
+                </td> */}
                 <td className="table-cell datetime-info" data-label="Date & Time">
-                  <p className="appointment-date">{appointment.date}</p>
+                  <p className="appointment-date">{formatDateTime(appointment.created_at)}</p>
                   <p className="appointment-time">{appointment.time}</p>
                 </td>
                 <td className="table-cell" data-label="Status">
@@ -91,7 +113,7 @@ const AppointmentTable = ({ appointments, onStatusUpdate, onSendNotification }) 
                       <option value="completed">Completed</option>
                       <option value="cancelled">Cancelled</option>
                     </select>
-                    <button 
+                    {/* <button 
                       onClick={() => onSendNotification(appointment.id, 'SMS')}
                       className="action-button sms-button"
                       title="Send SMS"
@@ -104,7 +126,7 @@ const AppointmentTable = ({ appointments, onStatusUpdate, onSendNotification }) 
                       title="Send Email"
                     >
                       <Mail className="w-4 h-4" />
-                    </button>
+                    </button> */}
                   </div>
                 </td>
               </tr>

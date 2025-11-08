@@ -126,7 +126,7 @@ const Footer = () => {
           <div className="copy-links">
             <ul>
               <li>
-                <Link to="/TermsOfUse">Terms of Use</Link>{" "}
+                <Link to="/terms-of-use">Terms of Use</Link>{" "}
                 {/* Added class for easier debugging */}
               </li>
               <li>

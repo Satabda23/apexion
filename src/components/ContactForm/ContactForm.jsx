@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Modal from "react-modal";
-import "./ContactForm.scss";
 import icon from "../../assets/banner/icons/Calling.png";
+import "./ContactForm.scss";
 
 // Modal accessibility target
 Modal.setAppElement("#root");
@@ -56,7 +56,10 @@ const ContactForm = () => {
         }),
       });
 
+      console.log("completed")
+
       const data = await response.json();
+      console.log(data)
 
       if (data.success) {
         openModal("Submitted!", "Your appointment request has been saved.", "success");

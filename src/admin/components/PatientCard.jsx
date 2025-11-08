@@ -3,8 +3,7 @@ import React from 'react';
 import { Edit, Phone, Mail, Calendar, User } from 'lucide-react';
 
 const PatientCard = ({ patient, onEdit, onViewHistory }) => {
-  const { 
-    id, 
+  const {  
     name, 
     phone, 
     email, 

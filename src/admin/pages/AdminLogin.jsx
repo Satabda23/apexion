@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Eye, EyeOff, Lock, User } from 'lucide-react';
+import adminApi from '../services/adminApi';
 import '../styles/admin.scss';
 import '../styles/components.scss';
 import '../styles/pages.scss';
@@ -22,29 +23,23 @@ const AdminLogin = () => {
     setLoading(true);
 
     try {
-      const tempCredentials = {
-        username: 'admin',
-        password: 'apexion@2025'
-      };
+      // Call the backend API to authenticate
+      const response = await adminApi.login(formData);
 
-      if (formData.username === tempCredentials.username && 
-          formData.password === tempCredentials.password) {
+      // Check if login was successful
+      if (response.success) {
+        // Show success message
+        toast.success(`Welcome back, ${response.user.username}!`);
         
-        localStorage.setItem('adminToken', 'temp-admin-token');
-        localStorage.setItem('adminUser', JSON.stringify({
-          id: 1,
-          username: 'admin',
-          name: 'Dr. Deepika Medhi',
-          role: 'admin'
-        }));
-
-        toast.success('Welcome back, Dr. Deepika!');
-        navigate('/admin');
+        // Navigate to admin dashboard
+        navigate('/admin/dashboard');
       } else {
-        toast.error('Invalid credentials');
+        toast.error(response.message || 'Login failed');
       }
     } catch (error) {
-      toast.error('Login failed. Please try again.');
+      // Handle errors
+      console.error('Login error:', error);
+      toast.error(error.message || 'Invalid credentials. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -60,7 +55,7 @@ const AdminLogin = () => {
           </div>
           <h2 className="login-title">Admin Login</h2>
           <p className="login-subtitle">
-            Apexion Dental Clinic Management System
+            Apexion Dental Clinic
           </p>
         </div>
 
@@ -79,6 +74,7 @@ const AdminLogin = () => {
                 onChange={handleChange}
                 className="form-input"
                 placeholder="Username"
+                autoComplete="username"
               />
             </div>
           </div>
@@ -96,24 +92,17 @@ const AdminLogin = () => {
                 onChange={handleChange}
                 className="form-input"
                 placeholder="Password"
+                autoComplete="current-password"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
                 className="password-toggle"
+                aria-label={showPassword ? 'Hide password' : 'Show password'}
               >
                 {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
               </button>
             </div>
-          </div>
-
-          {/* Demo Credentials Info */}
-          <div className="demo-credentials">
-            <h4 className="demo-title">Demo Credentials:</h4>
-            <p className="demo-info">
-              Username: <strong>admin</strong><br />
-              Password: <strong>apexion@2025</strong>
-            </p>
           </div>
 
           {/* Submit Button */}
@@ -123,7 +112,7 @@ const AdminLogin = () => {
             className="login-button"
           >
             {loading ? (
-              <div style={{ display: 'flex', alignItems: 'center' }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <div style={{ 
                   width: '16px', 
                   height: '16px', 
@@ -136,13 +125,13 @@ const AdminLogin = () => {
                 Signing in...
               </div>
             ) : (
-              'Sign in to Admin Panel'
+              'Login to Admin Dashboard'
             )}
           </button>
 
           {/* Footer */}
           <div className="login-footer">
-            <p>Built with ❤️ by Gratia Technologies</p>
+            <p>Designed, Developed and maintained by Gratia Technology pvt ltd</p>
           </div>
         </form>
       </div>

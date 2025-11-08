@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import AppointmentTable from '../components/AppointmentTable';
-import { Calendar, Plus } from 'lucide-react';
+import appointmentApi from '../services/appointmentApi';
+
+
+import { 
+  Calendar, 
+  // Plus 
+} from 'lucide-react';
 
 const AppointmentManager = () => {
   const [appointments, setAppointments] = useState([]);
@@ -9,82 +15,40 @@ const AppointmentManager = () => {
 
   // Mock data - replace with API call
   useEffect(() => {
-    // Simulate API call
-    setTimeout(() => {
-      setAppointments([
-        { 
-          id: 1, 
-          name: 'Rajesh Kumar', 
-          phone: '9876543210', 
-          message: 'Need root canal treatment', 
-          date: '2025-08-28',
-          time: '10:00 AM',
-          status: 'pending',
-          service: 'Root Canal',
-          createdAt: '2025-08-27'
-        },
-        { 
-          id: 2, 
-          name: 'Priya Sharma', 
-          phone: '8765432109', 
-          message: 'Teeth whitening consultation', 
-          date: '2025-08-29',
-          time: '2:00 PM',
-          status: 'confirmed',
-          service: 'Whitening',
-          createdAt: '2025-08-27'
-        },
-        { 
-          id: 3, 
-          name: 'Amit Patel', 
-          phone: '7654321098', 
-          message: 'Regular checkup', 
-          date: '2025-08-30',
-          time: '11:00 AM',
-          status: 'completed',
-          service: 'Checkup',
-          createdAt: '2025-08-26'
-        },
-        { 
-          id: 4, 
-          name: 'Meera Das', 
-          phone: '9123456789', 
-          message: 'Tooth extraction needed', 
-          date: '2025-08-31',
-          time: '3:00 PM',
-          status: 'pending',
-          service: 'Extraction',
-          createdAt: '2025-08-28'
-        },
-        { 
-          id: 5, 
-          name: 'Sanjay Singh', 
-          phone: '8234567890', 
-          message: 'Dental implant consultation', 
-          date: '2025-09-01',
-          time: '9:00 AM',
-          status: 'confirmed',
-          service: 'Implants',
-          createdAt: '2025-08-28'
-        }
-      ]);
-      setLoading(false);
-    }, 1000);
-  }, []);
-
-  const handleStatusUpdate = async (appointmentId, newStatus) => {
+  const fetchAppointments = async () => {
     try {
-      // In real app, make API call here
-      setAppointments(appointments.map(apt => 
-        apt.id === appointmentId ? { ...apt, status: newStatus } : apt
-      ));
-      
-      toast.success(`Appointment status updated to ${newStatus}`);
+      setLoading(true);
+      const response = await appointmentApi.getAppointments(); 
+      console.log("Fetched appointments:", response);
+      setAppointments(response.data || []);
     } catch (error) {
-      toast.error('Failed to update appointment status');
-      console.error('Error updating appointment:', error);
+      toast.error("Failed to load appointments");
+      console.error("Error fetching appointments:", error);
+    } finally {
+      setLoading(false);
     }
   };
+
+  fetchAppointments();
+}, []);
+
+console.log("Appointments state:", appointments);
+ const handleStatusUpdate = async (appointmentId, newStatus) => {
+  try {
+    // Use the appointmentApi service to update appointment
+    await appointmentApi.updateAppointment(appointmentId, newStatus );
+    
+    // Update local state after successful API call
+    setAppointments(appointments.map(apt => 
+      apt.id === appointmentId ? { ...apt, status: newStatus } : apt
+    ));
+    
+    toast.success(`Appointment status updated to ${newStatus}`);
+  } catch (error) {
+    toast.error('Failed to update appointment status');
+    console.error('Error updating appointment:', error);
+  }
+};
 
   const handleSendNotification = async (appointmentId, type) => {
     try {
@@ -131,10 +95,10 @@ const AppointmentManager = () => {
           </h1>
           <p className="page-description">Manage patient appointments and schedules</p>
         </div>
-        <button className="add-appointment-btn">
+        {/* <button className="add-appointment-btn">
           <Plus className="add-icon" />
           <span>Add Appointment</span>
-        </button>
+        </button> */}
       </div>
 
       {/* Status Summary Cards */}
