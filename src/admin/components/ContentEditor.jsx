@@ -1,6 +1,6 @@
 // src/admin/components/ContentEditor.jsx
 import React, { useState } from 'react';
-import { Image, Video, FileText, Upload, Save, X } from 'lucide-react';
+import { Image, Video, FileText, Save, X } from 'lucide-react';
 
 const ContentEditor = ({ contentType, initialContent, onSave, onCancel }) => {
   const [content, setContent] = useState(initialContent || '');

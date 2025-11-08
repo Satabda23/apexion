@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import NotificationForm from '../components/NotificationForm';
-import { Bell, Phone, Mail, Send, History } from 'lucide-react';
+import { Bell, Phone, Mail, History } from 'lucide-react';
 
 const NotificationCenter = () => {
   const [activeTab, setActiveTab] = useState('sms');

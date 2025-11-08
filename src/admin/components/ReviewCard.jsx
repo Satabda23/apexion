@@ -1,7 +1,7 @@
 // src/admin/components/ReviewCard.jsx
 import React from 'react';
 import StatusBadge from './StatusBadge';
-import { Star, CheckCircle, XCircle, Eye } from 'lucide-react';
+import { Star, CheckCircle, XCircle } from 'lucide-react';
 
 const ReviewCard = ({ review, onApprove, onReject, onViewFull }) => {
   const { id, name, text, rating, status, createdAt } = review;

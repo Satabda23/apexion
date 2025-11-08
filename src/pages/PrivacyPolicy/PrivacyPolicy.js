@@ -277,7 +277,7 @@ if (typeof document !== "undefined") {
 }
 
 // Export all functions
-export default {
+const privacyPolicyModule = {
   scrollToSection,
   initializeAccordion,
   initScrollAnimations,
@@ -286,3 +286,5 @@ export default {
   handleHashNavigation,
   initPrivacyPolicy,
 };
+
+export default privacyPolicyModule;
