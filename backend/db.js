@@ -1,3 +1,4 @@
+// db.js
 const mysql = require("mysql2");
 
 // Railway MySQL configuration
@@ -29,10 +30,48 @@ db.on("error", (err) => {
   console.error("⚠️ Database error:", err);
   if (err.code === "PROTOCOL_CONNECTION_LOST") {
     console.log("🔄 Attempting to reconnect...");
-    // Optionally recreate connection
+    // Optionally recreate connection logic can go here
   } else {
     throw err;
   }
 });
 
-module.exports = db;
+// --- Promise-based Query Helpers ---
+
+/**
+ * Run any SQL query and return all results.
+ * @param {string} sql - SQL query
+ * @param {Array} [params] - Query parameters
+ * @returns {Promise<Array>} Query results
+ */
+const query = (sql, params = []) => {
+  return new Promise((resolve, reject) => {
+    db.query(sql, params, (err, results) => {
+      if (err) {
+        console.error("❌ SQL Error:", err.sqlMessage || err.message);
+        return reject(err);
+      }
+      resolve(results);
+    });
+  });
+};
+
+/**
+ * Run a SQL query and return only one row.
+ * @param {string} sql - SQL query
+ * @param {Array} [params] - Query parameters
+ * @returns {Promise<Object|null>} Single row or null
+ */
+const queryOne = (sql, params = []) => {
+  return new Promise((resolve, reject) => {
+    db.query(sql, params, (err, results) => {
+      if (err) {
+        console.error("❌ SQL Error:", err.sqlMessage || err.message);
+        return reject(err);
+      }
+      resolve(results[0] || null);
+    });
+  });
+};
+
+module.exports = { db, query, queryOne };

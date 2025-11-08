@@ -1,6 +1,8 @@
 require("dotenv").config();
 const bcrypt = require("bcryptjs");
-const { db, query, queryOne } = require("../db.js");
+const { db, query, queryOne } = require("../db");
+
+console.log(db, query, queryOne);
 
 const seedAdmin = async () => {
   try {
