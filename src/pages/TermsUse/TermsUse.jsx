@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import "./TermsUse.scss";
 import { scrollToSection, initializeAccordion } from "./TermsUseHelpers.js";
+import Navbar from "../../components/Navbar/Navbar.js";
+import Footer from "../../sections/Footer/Footer.js";
 
 const TermsOfUse = () => {
   useEffect(() => {
@@ -10,6 +12,7 @@ const TermsOfUse = () => {
 
   return (
     <div className="terms-of-use-page">
+      <Navbar />
       {/* Hero Section */}
       <section className="terms-hero">
         <div className="container">
@@ -595,6 +598,7 @@ const TermsOfUse = () => {
           </div>
         </section>
       </div>
+      <Footer />
     </div>
   );
 };

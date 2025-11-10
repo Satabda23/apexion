@@ -131,7 +131,8 @@ const AdminLogin = () => {
 
           {/* Footer */}
           <div className="login-footer">
-            <p>Designed, Developed and maintained by Gratia Technology pvt ltd</p>
+            <p>Designed and Developed by</p>
+              <p>Gratia Technology Pvt Ltd</p>
           </div>
         </form>
       </div>
