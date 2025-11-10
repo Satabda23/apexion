@@ -25,6 +25,10 @@ const Footer = () => {
       name: "Contact Us",
       link: "/contact", // Fixed: Changed from "/" to "/contact"
     },
+    {
+      name: "Admin login",
+      link: "/admin/pages/AdminLogin.jsx", // Fixed: Changed from "/" to "/contact"
+    },
   ];
 
   const footerContacts = [
