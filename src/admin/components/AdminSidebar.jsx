@@ -36,7 +36,7 @@ const AdminSidebar = ({ isOpen, onToggle }) => {
   const handleLogout = () => {
     localStorage.removeItem('adminToken');
     localStorage.removeItem('adminUser');
-    navigate('/admin/login');
+    navigate('/');
   };
 
   const isActiveRoute = (path) => {
